@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\cloud2020\clone\djangofullstack\myenv"
+VIRTUAL_ENV="D:\Learn\ปี4\AI\Python2020\ExpensesAccount\expensesAcc\myenv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

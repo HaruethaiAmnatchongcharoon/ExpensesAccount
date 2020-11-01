@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=D:\cloud2020\clone\djangofullstack\myenv
+set VIRTUAL_ENV=D:\Learn\ปี4\AI\Python2020\ExpensesAccount\expensesAcc\myenv
 
 if not defined PROMPT set PROMPT=$P$G
 

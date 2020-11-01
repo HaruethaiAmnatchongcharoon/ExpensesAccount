@@ -1,0 +1,169 @@
+{% extends 'frontend/base.html' %}
+{% block title %} Let's vote {% endblock %}
+{% block content %}
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+<div class="jumbotron">
+    <h1 class="display-3">Make a vote.</h1>
+    <p class="lead">I just want to know what most of you think about these thing, Which on you prefer. Let's vote!!!</p>
+   
+</div>
+
+
+<div>
+<table class="fixed">
+    
+    <tr><td><h1>Pepsi or Coke ?</h1></td></tr>
+    <tr>
+        
+        <td width ="40%">
+            <p><img src ="static/images/pepsi.jpg" class="img-fluid" width ="90%"></p>
+            <p><button type="button" id="pic1" class="btn btn-primary" onclick="addVote(this.id);">vote</button></p>
+            
+        </td>
+        <td width ="40%">
+            <p><img src="static/images/coke.jpg" class="img-fluid" width ="90%"></p>
+            <p><button type="button" id="pic2" class="btn btn-primary" onclick="addVote(this.id);">vote</button></p>
+        </td>
+        <td>
+        <h2><div id="win1" style="height: 50%; width: 90%;">No vote</div></h2>
+        <p></p>
+        <p id="demo1">picture 1 : 0 point(s)</p>
+        <p id="demo2">picture 2 : 0 point(s)</p>
+        </td>
+    </tr>
+    
+    <tr><td><h1>Sea or Mountain ?</h1></td></tr>
+    <tr>
+        <td width ="40%">
+            <p><img src ="static/images/sea.jpg" class="img-fluid" width ="90%"></p>
+            <p><button type="button" id="pic3" class="btn btn-primary" onclick="addVote(this.id);">vote</button></p>
+            
+        </td>
+        <td width ="40%">
+            <p><img src="static/images/mountain.jpg" class="img-fluid" width ="90%"></p>
+            <p><button type="button" id="pic4" class="btn btn-primary" onclick="addVote(this.id);">vote</button></p>
+        </td>
+        <td>
+        <h2><div id="win2" style="height: 50%; width: 90%;">No vote</div></h2>
+        <p></p>
+        <p id="demo3">picture 3 : 0 point(s)</p>
+        <p id="demo4">picture 4 : 0 point(s)</p>
+        </td>
+    </tr>
+
+    <tr><td><h1>DC or Avenger ?</h1></td></tr>
+    <tr>
+        <td width ="40%">
+            <p><img src ="static/images/dc.jpg" class="img-fluid" width ="90%"></p>
+            <p><button type="button" id="pic5" class="btn btn-primary" onclick="addVote(this.id);">vote</button></p>
+            
+        </td>
+        <td width ="40%">
+            <p><img src="static/images/avenger.jpg" class="img-fluid" width ="90%"></p>
+            <p><button type="button" id="pic6" class="btn btn-primary" onclick="addVote(this.id);">vote</button></p>
+        </td>
+        <td>
+        <h2><div id="win3" style="height: 50%; width: 90%;">No vote</div></h2>
+        <p></p>
+        <p id="demo5">picture 5 : 0 point(s)</p>
+        <p id="demo6">picture 6 : 0 point(s)</p>
+        </td>
+    </tr>
+
+</table>
+</div>
+
+<script>
+
+var pic1 = 0;
+var pic2 = 0;
+var pic3 = 0;
+var pic4 = 0;
+var pic5 = 0;
+var pic6 = 0;
+
+function addVote(buttonid){
+    if (buttonid == "pic1"){
+        pic1++;  
+    }
+    if (buttonid == "pic2"){
+        pic2++;
+    }
+    if (buttonid == "pic3"){
+        pic3++;  
+    }
+    if (buttonid == "pic4"){
+        pic4++;
+    }
+    if (buttonid == "pic5"){
+        pic5++;  
+    }
+    if (buttonid == "pic6"){
+        pic6++;
+    }
+    document.getElementById("demo1").innerHTML = "picture 1 : " +pic1+ " points";
+    document.getElementById("demo2").innerHTML = "picture 2 : " +pic2+ " points";
+    document.getElementById("demo3").innerHTML = "picture 1 : " +pic3+ " points";
+    document.getElementById("demo4").innerHTML = "picture 2 : " +pic4+ " points";
+    document.getElementById("demo5").innerHTML = "picture 1 : " +pic5+ " points";
+    document.getElementById("demo6").innerHTML = "picture 2 : " +pic6+ " points";
+
+
+    if (pic1 > pic2){
+        document.getElementById("win1").innerHTML = "The Winner is Pepsi"
+    }
+    if (pic1 < pic2){
+        document.getElementById("win1").innerHTML = "The Winner is Coke"
+    }
+    if (pic1 == pic2){
+        document.getElementById("win1").innerHTML = "The Winner is both"
+    }
+
+    if (pic3 > pic4){
+        document.getElementById("win2").innerHTML = "The Winner is sea"
+    }
+    if (pic3 < pic4){
+        document.getElementById("win2").innerHTML = "The Winner is mountain"
+    }
+    if (pic3 == pic4){
+        document.getElementById("win2").innerHTML = "The Winner is both"
+    }
+
+    if (pic5 > pic6){
+        document.getElementById("win3").innerHTML = "The Winner is DC"
+    }
+    if (pic5 < pic6){
+        document.getElementById("win3").innerHTML = "The Winner is Avenger"
+    }
+    if (pic5 == pic6){
+        document.getElementById("win3").innerHTML = "The Winner is both"
+    }
+}
+
+function g(){
+    var v = pic1;
+    window.onload = function () {
+    chart = new CanvasJS.Chart("chartContainer", {
+      title:{
+        text: "WINNER"              
+      },
+      data: [              
+      {
+        // Change type to "doughnut", "line", "splineArea", etc.
+        type: "column",
+        dataPoints: [
+          { label: "orange", y: pic1 },
+          { label: "orange", y: 32  }
+        ]
+      }
+      ]
+    });
+    chart.render();
+  }
+}
+</script>           
+    
+{% endblock %}

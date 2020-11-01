@@ -1,0 +1,252 @@
+{% extends 'frontend/base.html' %}
+{% block title %} Expenses {% endblock %}
+{% block content %}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<div class="jumbotron">
+    <h1 class="display-3">Expenses table</h1>
+</div>
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static './lib/bootstrap/css/bootstrap.css' %}">
+
+    <link rel="stylesheet" href="{% static './lib/jquery/jquery-1.11.0.min.js' %}">
+    <link rel="stylesheet" href="{% static './lib/bootstrap/js/bootstrap.min.js' %}">
+
+    <link rel="stylesheet" href="{% static './lib/fontawesome/webfonts/glyphicons-halflings-regular.svg' %}">
+
+
+    <script type="text/javascript">
+        var index = 0;
+        function displayIndex()
+        {   
+            index += 1;
+            return index
+        }
+        </script>
+</head>
+<body>
+
+
+<div class="row">
+  <div class="col-sm-5">
+    <table id="productTable" 
+          class="table table-bordered table-condensed table-striped">
+      <thead>
+        <tr>
+          <th>Delete</th>
+          <th>Edit</th>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Expenses Name</th>
+          <th>Amount(baht)</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="panel panel-primary">
+      <div class="form-group">
+        <label for="expenses">Expenses Name</label>
+          <input type="text"
+                class="form-control"
+                value="coffee"
+                id="expenses" />
+      </div>
+
+      <div class="form-group">
+        <label for="edate">Date</label>
+          <input type="date"
+                class="form-control"
+                value="6/11/2015"
+                id="edate" />
+      </div>
+
+      <div class="form-group">
+        <label for="amount">
+                Amount(baht)
+              </label>
+          <input type="number"
+                     class="form-control"
+                     value="100"
+                     id="amount" />
+      </div>
+
+          
+      <div class="panel-footer">
+     
+          <div class="col-xs-12">
+            <button type="button" id="updateButton"
+                  class="btn btn-primary"
+                  onclick="productUpdate();">
+                  Add
+                </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p id="demo0"></p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-5">
+
+      <p id="date1"></p>
+      <p id="date2"></p>
+      <p id="date3"></p>
+      <p id="date4"></p>
+      <p id="date5"></p>
+
+      <p id="amount1"></p>
+      <p id="amount2"></p>
+      <p id="amount3"></p>
+      <p id="amount4"></p>
+      <p id="amount5"></p> 
+
+    </div>
+  </div>
+</div>
+</div>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+<script>
+   
+    // Next id for adding a new Product
+    var nextId = 1;
+    // ID of Product currently editing
+    var activeId = 0;
+
+
+    function productDisplay(ctl) {
+      var row = $(ctl).parents("tr");
+      var cols = row.children("td");
+
+      activeId = $($(cols[0]).children("button")[0]).data("id");
+      $("#expenses").val($(cols[4]).text());
+      $("#edate").val($(cols[3]).text());
+      $("#amount").val($(cols[5]).text());
+
+      // Change Update Button Text
+      $("#updateButton").text("Update");
+    }
+
+    function productUpdate() {
+      if ($("#updateButton").text() == "Update") {
+        productUpdateInTable(activeId);
+      }
+      else {
+        productAddToTable();
+      }
+
+      // Clear form fields
+      formClear();
+
+      // Focus to product name field
+      $("#expenses").focus();
+    }
+
+    // Add product to <table>
+    function productAddToTable() {
+      // First check if a <tbody> tag exists, add one if not
+      if ($("#productTable tbody").length == 0) {
+        $("#productTable").append("<tbody></tbody>");
+      }
+
+      // Append product to table
+      $("#productTable tbody").append(
+        productBuildTableRow(nextId));
+      // Increment next ID to use
+      nextId += 1;
+    }
+
+    // Update product in <table>
+    function productUpdateInTable(id) {
+      // Find Product in <table>
+      var row = $("#productTable button[data-id='" + id + "']")
+                .parents("tr")[0];
+
+      // Add changed product to table
+      $(row).after(productBuildTableRow(id));
+      // Remove original product
+      $(row).remove();
+
+      // Clear form fields
+      formClear();
+
+      // Change Update Button Text
+      $("#updateButton").text("Add");
+    }
+
+    // Build a <table> row of Product data
+    function productBuildTableRow(id) {
+      var x = document.getElementById("productTable").rows[0].cells[5].innerHTML;
+      var ret =
+      "<tr>" + 
+      "<td>" +
+          "<button type='button' " +
+                  "onclick='productDelete(this);' " +
+                  "class='btn btn-default' " +
+                  "data-id='" + id + "'>" +
+                  "<span class='glyphicon glyphicon-remove'>X</span>" +
+          "</button>" +
+        "</td>" +
+        "<td>" +
+          "<button type='button' " +
+                  "onclick='productDisplay(this);' " +
+                  "class='btn btn-default' " +
+                  "data-id='" + id + "'>" +
+                  "<span class='glyphicon glyphicon-edit'>edit</span>" + 
+          "</button>" +
+        "</td>" +
+        "<td>" + displayIndex() + "</td>" +
+        "<td>" + $("#edate").val() + "</td>" +
+        "<td>" + $("#expenses").val() + "</td>" +
+        "<td>" + $("#amount").val() + "</td>" 
+      "</tr>"
+      
+      return ret;
+    }
+    
+    // Delete product from <table>
+    function productDelete(ctl) {
+      $(ctl).parents("tr").remove();
+    }
+
+    // Clear form fields
+    function formClear() {
+      $("#expenses").val("");
+      $("#edate").val("");
+      $("#amount").val("");
+    }
+
+function t() {
+        var y = 1;
+        var date = [];
+        var amount = [];
+
+        for (i=3; i<=100; i+=6) {
+        var d = i;
+        var a = i+2;
+        var dindex = $("td:eq("+d+")").text();
+        var aindex = $("td:eq("+a+")").text();
+        date.push(dindex);
+        amount.push(aindex);
+
+        document.getElementById("date"+y).innerHTML = date;
+        document.getElementById("amount"+y).innerHTML = amount;
+        y++;         
+        }        
+    }
+
+</script>
+
+
+
+</body>
+</html>
+
+{% endblock %}

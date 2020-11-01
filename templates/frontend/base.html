@@ -11,7 +11,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="#">Inventory</a>
+        <a class="navbar-brand" href="#">Haruethai</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -22,19 +22,14 @@
                     <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'about' %}">About <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'expenses' %}">Expenses table <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'contact' %}">Contact <span class="sr-only">(current)</span></a>
-                </li>
-
-
-                
+                    <a class="nav-link" href="{% url 'vote' %}">Vote <span class="sr-only">(current)</span></a>
+                </li> 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+
+            <form class="form-inline my-2 my-lg-0" id="date"></form>
         </div>
     </nav>
     {% block content %}
@@ -42,6 +37,14 @@
     <script src="{% static './lib/jquery/jquery-2.2.4.js' %}"></script>
     <script src="{% static './lib/popper/popper.min.js' %}"></script>
     <script src="{% static './lib/bootstrap/js/bootstrap.min.js' %}"></script>
+
+<script>
+    n =  new Date();
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    document.getElementById("date").innerHTML = "Today is " + m + "/" + d + "/" + y;
+</script>
 
 </body>
 </html>

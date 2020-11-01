@@ -7,9 +7,9 @@ def index(request):
     return render(request, 'frontend/index.html', {'products': products})
 
 
-def about(request):
-    return render(request, 'frontend/about.html')
+def expenses(request):
+    return render(request, 'frontend/expenses.html')
 
 
-def contact(request):
-    return render(request, 'frontend/contact.html')
+def vote(request):
+    return render(request, 'frontend/vote.html')
